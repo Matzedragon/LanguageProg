@@ -1,10 +1,11 @@
 // TP1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-#include <stdio.h>
+
 // QUESTION 1
-/*int main()
+/*#include <iostream>
+#include <stdio.h>
+int main()
 {
 	int t;
 	int tempo;
@@ -36,11 +37,12 @@
 	printf("Prix abonnement :%.2f", prix);
 }*/
 
-#include <stdlib.h>
-#include <time.h>
+
 
 // QUESTION 2
-/*int main() {
+/*#include <stdlib.h>
+#include <time.h>
+int main() {
 	srand(time(NULL));
 	int entreeUser;
 	int randint;
@@ -381,9 +383,11 @@ int main() {
 	printf(" ]");
 }*/
 
-/*int taille_sequence(int tab[], int l) {
+/*#include <stdio.h>
+#include <math.h>
+int taille_sequence(int tab[], int l) {
 	int plusLongueSeq = 0;
-	int tempo = 0;
+	int tempo = 1;
 	for (int i = 1; i < l; i++) {
 		if (tab[i] == tab[i - 1]) {
 			tempo += 1;
@@ -391,21 +395,77 @@ int main() {
 		else {
 			if(tempo>=plusLongueSeq)
 				plusLongueSeq = tempo;
-			tempo = 0;
+			tempo = 1;
 		}
 	}
+	if (tempo >= plusLongueSeq) {
+		plusLongueSeq = tempo;
+	}
 	return plusLongueSeq;
-}
-
-int versus(int tab1[], int l1, int tab2[], int l2) {
-
 }*/
 
+/*int versus(int tab1[], int l1, int tab2[], int l2) {
+	int score = 0;
+	int taille = l1;
+	if (l1 != l2) {
+		score += abs(l2 - l1);
+		taille = l2 < l1 ? l2 : l1;
+	}
+	for (int i = 0; i < taille; i++) {
+		if (tab1[i] > tab2[i]) {
+			score += 1;
+		}
+		else if (tab2[i] > tab1[i]) {
+			score -= 1;
+		}
+	}
+	return score;
+}
+
 int main() {
-	double dest[11];
+	//double dest[11];
 	double src1[] = { 1.0, 2.0, 5.0, 6.0, 6.8 };
 	double src2[] = { 0.0, 2.0, 4.0, 7.0, 9.0, 11.0};
+
+	int tab1[] = { 1, 2, 5, 6, 6,9,8,7,6,5};
+	int tab2[] = { 0, 2, 4, 7, 9, 11 };
+
+	int tabseq[] = { 3,5,5,5,7,9,12,2, 4, 1, 6, 6, 6, 6, 85, 10, 6 };
 	//fusion_simple(dest, src1, src2, 5);
 	//fusion_tri(dest, src1, 5, src2, 6);
+	//printf("la plus longue séquence contigues = %d",taille_sequence(tabseq, 17));
+	printf("%d", versus(tab1, 10, tab2, 6));
 	return 0;
+}*/
+
+//arithmetique multi-précision 
+
+#include <stdio.h>
+#define SIZETAB 100
+
+int number_length(char b[], int lb) {
+
+}
+
+int main() {
+	int nombre;
+	
+	char tab[SIZETAB];
+	printf("entrez votre nombre : ");
+	scanf_s("%d", &nombre);
+	unsigned int reste = nombre;
+	int indice = 0;
+	while (reste && indice < 100) 
+	{
+		char result = reste % 100;
+		printf("%02d = %d\n",result, reste % 100);
+		tab[indice] = result;
+		indice++;
+		reste = reste - result;
+		reste /= 100;
+	}
+	printf("indice, %d\n", indice);
+	for (int i = indice-1; i>=0; i--) {
+		printf("%02d - ", tab[i]);
+	}
 }
