@@ -441,31 +441,99 @@ int main() {
 //arithmetique multi-précision 
 
 #include <stdio.h>
-#define SIZETAB 100
+#define SIZETAB 5
+
 
 int number_length(char b[], int lb) {
+	int existe =0;
+	// commencer par le poid fort du nombre quand la valeur est différente de 0
+	//c'est le début du nombre donc on sait que le nombre va de i à 0
+	for (int i = lb - 1; i > 0; i--) {
+		if (b[i] != 0) {
+			existe = i+1;
+			break;
+		}
+	}
+	return existe;
+}
 
+char addition(char a[], int la, char b[], int lb) {
+	int retenue = 0;
+	char retour;
+	int tempo;
+	if (la < number_length(b, lb)) {
+		retour = -1;
+	}
+	else {
+		for (int i = 0; i < lb; i++) {
+			tempo = (a[i] + b[i] + retenue);
+			// si a[i] + b[i] + retenue ( = 0 ou 1) est supé à 100 alors initialise la retenue et on enlève 100 à tempo
+			if (tempo >= 100) {
+				retenue = 1;
+				a[i] = (tempo - 100);
+			}
+			// sinon a[i] = a[i] + b[i]
+			else {
+				a[i] = tempo;
+				retenue = 0;
+			}
+		}
+		if (retenue == 0) {
+			retour = 0;
+		}
+		else {
+			retour = 1;
+		}
+	}
+	printf("\n resultat addition : ");
+	for (int i = la-1; i >= 0; i--) {
+		printf("%02d - ", a[i]);
+	}
+	return retour;
+}
+
+int compare(char a[], int la, char b[], int lb) {
+	int retour = 0;
+	int Minsize = la >= lb ? lb : la;
+	if (number_length(a, la) > number_length(b, lb)) {
+		return 1;
+	}
+	for (int i = 0; i < Minsize; i++) {
+		if (a[i] != b[i]) {
+			retour = -1;
+			break;
+		}
+	}
+	return retour;
 }
 
 int main() {
 	int nombre;
-	
 	char tab[SIZETAB];
+	char test[] = { 00,00,13,15,16 };
 	printf("entrez votre nombre : ");
 	scanf_s("%d", &nombre);
 	unsigned int reste = nombre;
 	int indice = 0;
+	for (int i = 0; i < SIZETAB; i++) {
+		tab[i] = 00;
+	}
 	while (reste && indice < 100) 
 	{
 		char result = reste % 100;
 		printf("%02d = %d\n",result, reste % 100);
-		tab[indice] = result;
+		tab[indice] = ("%02d",result);
 		indice++;
 		reste = reste - result;
 		reste /= 100;
 	}
 	printf("indice, %d\n", indice);
-	for (int i = indice-1; i>=0; i--) {
+	for (int i = SIZETAB-1; i>=0; i--) {
 		printf("%02d - ", tab[i]);
 	}
+	printf("\ntaille = %d ",number_length(tab, SIZETAB));
+	printf("\nresult addition : %d", addition(tab, SIZETAB, tab, SIZETAB));
+	printf("\nresult compare : %d supposé = 1 car test > tab", compare( test, 5, tab, SIZETAB));
+	printf("\nresult compare : %d supposé = -1 car tab != test et pas >", compare(tab, SIZETAB, test, 5 ));
+	printf("\nresult compare : %d supposé = 0 car tab = tab", compare(tab, SIZETAB, tab, SIZETAB));
 }
