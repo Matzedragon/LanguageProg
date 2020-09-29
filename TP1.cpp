@@ -566,3 +566,33 @@ int main() {
 	printf("alpha rank de '5' : %d\n", alpha_rank('5'));
 
 }*/
+
+void concat_n(char dest[], char src[], int n) {
+	int tailledest = sizeof(*dest) / sizeof(dest[0]);
+	char currentChar;
+	int i = -1;
+	do {
+		i++;
+		currentChar = dest[i];
+	} while (currentChar != '\0');
+	printf("%d", (i < tailledest));
+	for (int y = 0; y < n && i < tailledest; i++, y++) {
+		printf("%c src", src[y]);
+		dest[i] = src[y];
+		if (src[y] == '\0')
+			break;
+	}
+}
+
+int main() {
+	char dest[256] = "Bonjour!";
+	char src[] = "Au revoir!";
+	char test1[] = "0123456789";
+	char test2[] = "ABCDEFGHIJKLMNO";
+	concat_n(dest, src, 60);
+	printf("%s\n", dest);
+	concat_n(dest, test1, 5);
+	printf("%s\n", dest);
+	concat_n(dest, test2, 6);
+	printf("%s\n", dest);
+}
