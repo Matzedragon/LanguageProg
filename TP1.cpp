@@ -440,7 +440,7 @@ int main() {
 
 //arithmetique multi-précision 
 
-#include <stdio.h>
+/*#include <stdio.h>
 #define SIZETAB 5
 
 
@@ -536,4 +536,33 @@ int main() {
 	printf("\nresult compare : %d supposé = 1 car test > tab", compare( test, 5, tab, SIZETAB));
 	printf("\nresult compare : %d supposé = -1 car tab != test et pas >", compare(tab, SIZETAB, test, 5 ));
 	printf("\nresult compare : %d supposé = 0 car tab = tab", compare(tab, SIZETAB, tab, SIZETAB));
+}*/
+
+// TD 3
+
+#include <stdio.h>
+#include <string.h>
+#include < ctype.h>
+//Fonctions sur les caractères
+/*int char_to_int(char c) {
+	if (c >= '0' && c <= '9') {
+		return c - 48;
+	}
+	return -1;
 }
+
+int alpha_rank(char c) {
+	if (isalpha(c)) {
+		return toupper(c) - 64;
+	}
+	return -1;
+}
+
+int main() {
+	printf("alpha rank de c : %d\n", alpha_rank('c'));
+	printf("alpha rank de D : %d\n", alpha_rank('D'));
+	printf("alpha rank de z : %d\n", alpha_rank('z'));
+	printf("alpha rank de Z : %d\n", alpha_rank('Z'));
+	printf("alpha rank de '5' : %d\n", alpha_rank('5'));
+
+}*/
