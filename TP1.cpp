@@ -461,11 +461,12 @@ char addition(char a[], int la, char b[], int lb) {
 	int retenue = 0;
 	char retour;
 	int tempo;
+	int i;
 	if (la < number_length(b, lb)) {
 		retour = -1;
 	}
 	else {
-		for (int i = 0; i < lb; i++) {
+		for (i = 0; i < lb; i++) {
 			tempo = (a[i] + b[i] + retenue);
 			// si a[i] + b[i] + retenue ( = 0 ou 1) est supé à 100 alors initialise la retenue et on enlève 100 à tempo
 			if (tempo >= 100) {
@@ -478,7 +479,12 @@ char addition(char a[], int la, char b[], int lb) {
 				retenue = 0;
 			}
 		}
-		if (retenue == 0) {
+		if (retenue == 1 && i<la) {
+			a[i+1] + retenue;
+			retenue = 0;
+			
+		}
+		if(retenue ==1) {
 			retour = 0;
 		}
 		else {
@@ -518,7 +524,7 @@ int main() {
 	for (int i = 0; i < SIZETAB; i++) {
 		tab[i] = 00;
 	}
-	while (reste && indice < 100) 
+	while (reste && indice < 100)
 	{
 		char result = reste % 100;
 		printf("%02d = %d\n",result, reste % 100);
@@ -567,20 +573,32 @@ int main() {
 
 }*/
 
-void concat_n(char dest[], char src[], int n) {
-	int tailledest = sizeof(*dest) / sizeof(dest[0]);
+/*void concat_n(char dest[], char src[], int n) {
 	char currentChar;
 	int i = -1;
 	do {
 		i++;
 		currentChar = dest[i];
 	} while (currentChar != '\0');
-	printf("%d", (i < tailledest));
-	for (int y = 0; y < n && i < tailledest; i++, y++) {
-		printf("%c src", src[y]);
+	for (int y = 0; y < n; i++, y++) {
 		dest[i] = src[y];
 		if (src[y] == '\0')
 			break;
+	}
+}
+
+void filter(char input[], char filter_me) {
+	int i = 0;
+	int y = 0;
+	char curChar;
+	while ((curChar = input[i]) != '\0') {
+		if (input[i] == filter_me) {
+			for (y = i+1; input[y] != '\0'; y++) {
+				input[y-1] = input[y];
+			}
+			input[y-1] = '\0';
+		}
+		i++;
 	}
 }
 
@@ -589,10 +607,16 @@ int main() {
 	char src[] = "Au revoir!";
 	char test1[] = "0123456789";
 	char test2[] = "ABCDEFGHIJKLMNO";
-	concat_n(dest, src, 60);
+	concat_n(desti, src, 60);
+	printf("%s\n", desti);
+	concat_n(desti, test1, 5);
+	printf("%s\n", desti);
+	concat_n(desti, test2, 6);
+	printf("%s\n", desti);
+	//filter
 	printf("%s\n", dest);
-	concat_n(dest, test1, 5);
+	filter(dest, '!');
 	printf("%s\n", dest);
-	concat_n(dest, test2, 6);
+	filter(dest, 'o');
 	printf("%s\n", dest);
-}
+}*/
