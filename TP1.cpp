@@ -620,3 +620,27 @@ int main() {
 	filter(dest, 'o');
 	printf("%s\n", dest);
 }*/
+
+void letter_occurrences(char in_txt[], char occ[]) {
+	int temp;
+	for (int i = 0; in_txt[i] != '\0'; i++) {
+		temp= toupper(in_txt[i]) - 'A';
+		if (temp >= 0)
+			occ[temp] += 1;
+	}
+}
+
+int check_password(char passwd[]) {
+
+}
+
+int main() {
+	char alphabet[26] = {0};
+	char test[] = "C\'est une courte phrase. Elle est en francais.";
+	int i = 0;
+	char c = 'a';
+	letter_occurrences(test, alphabet);
+	for (i = 0; i < 26; i++) {
+		printf("%c: %d  ", c + i, alphabet[i]);
+	}
+}
