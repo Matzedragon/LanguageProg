@@ -546,9 +546,9 @@ int main() {
 
 // TD 3
 
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
-#include < ctype.h>
+#include < ctype.h>*/
 //Fonctions sur les caractères
 /*int char_to_int(char c) {
 	if (c >= '0' && c <= '9') {
@@ -572,47 +572,46 @@ int main() {
 	printf("alpha rank de '5' : %d\n", alpha_rank('5'));
 
 }*/
-
-/*void concat_n(char dest[], char src[], int n) {
+/*#include <string.h>
+#include <stdio.h>
+void concat_n(char dest[], char src[], int n) {
 	char currentChar;
-	int i = -1;
-	do {
-		i++;
-		currentChar = dest[i];
-	} while (currentChar != '\0');
-	for (int y = 0; y < n; i++, y++) {
+	size_t i = -1;
+	int y = 0;
+	// permet de connaitre à partir de quel index de dest il faut concatener ( avant \0)
+	i = strlen(dest);
+	while (src[y] != '\0' && y<n) {
 		dest[i] = src[y];
-		if (src[y] == '\0')
-			break;
+		i++; y++;
 	}
+	dest[i] = '\0';
 }
-
+// corrected
 void filter(char input[], char filter_me) {
 	int i = 0;
-	int y = 0;
+	int j = 0;
 	char curChar;
 	while ((curChar = input[i]) != '\0') {
-		if (input[i] == filter_me) {
-			for (y = i+1; input[y] != '\0'; y++) {
-				input[y-1] = input[y];
-			}
-			input[y-1] = '\0';
+		if (curChar != filter_me) {
+			input[j] = input[i];
+			j++;
 		}
 		i++;
 	}
+	input[j] = '\0';
 }
 
 int main() {
-	char dest[256] = "Bonjour!";
+	char dest[256] = "Boonjour!";
 	char src[] = "Au revoir!";
 	char test1[] = "0123456789";
 	char test2[] = "ABCDEFGHIJKLMNO";
-	concat_n(desti, src, 60);
-	printf("%s\n", desti);
-	concat_n(desti, test1, 5);
-	printf("%s\n", desti);
-	concat_n(desti, test2, 6);
-	printf("%s\n", desti);
+	concat_n(dest, src, 60);
+	printf("%s\n", dest);
+	concat_n(dest, test1, 5);
+	printf("%s\n", dest);
+	concat_n(dest, test2, 6);
+	printf("%s\n", dest);
 	//filter
 	printf("%s\n", dest);
 	filter(dest, '!');
@@ -620,22 +619,63 @@ int main() {
 	filter(dest, 'o');
 	printf("%s\n", dest);
 }*/
-
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
 void letter_occurrences(char in_txt[], char occ[]) {
 	int temp;
 	for (int i = 0; in_txt[i] != '\0'; i++) {
 		temp= toupper(in_txt[i]) - 'A';
-		if (temp >= 0)
+		if (temp >= 0&& temp <=25)
 			occ[temp] += 1;
 	}
 }
 
-int check_password(char passwd[]) {
-
+int check_password(const char passwd[]) {
+	int correct = 0;
+	int i = 0;
+	int taillePwd = strlen(passwd);
+	int countMaj = 0;
+	int countMin = 0;
+	int countNumber = 0;
+	int alpha = 0;
+	char curChar;
+	if (taillePwd >= 10) {
+		while ((countMaj==0 || countMin == 0 || countNumber == 0 || alpha == 0) && i < taillePwd) {
+			curChar = passwd[i];
+			if (curChar >= 'A' && curChar <= 'Z') {
+				countMaj++;
+			}
+			else if (curChar >= 'a' && curChar <= 'z') {
+				countMin++;
+			}
+			else if (curChar >= '0' && curChar <= '9') {
+				countNumber++;
+			}
+			else if ((curChar >= 33 && curChar <= 47) || (curChar >= 60 && curChar <=63)) { // non alpha-numeric char
+				alpha++;
+			}
+			i++;
+		}
+		if (countMaj != 0 && countMin != 0 && countNumber != 0 && alpha != 0)
+			correct = 1;
+	}
+	return correct;
 }
 
+unsigned int string_to_uint(const char tab[]) {
+	int result = 0;
+	int puissance = 1;
+	int i = strlen(tab)-1;// pour commencer au point faible du nombre, donc à la fin du tableau
+	while (i>=0) {
+		result += (tab[i] - 48) * puissance; // on mutliplie chaque nombre par la puissance actuelle et on l'ajoute au resultat
+		i--;
+		puissance *= 10; // la puissance augmente vu qu'on passe au prochaine caractère.
+	}
+	return result;
+}
 int main() {
-	char alphabet[26] = {0};
+	/*char alphabet[26] = {0};
 	char test[] = "C\'est une courte phrase. Elle est en francais.";
 	int i = 0;
 	char c = 'a';
@@ -643,4 +683,223 @@ int main() {
 	for (i = 0; i < 26; i++) {
 		printf("%c: %d  ", c + i, alphabet[i]);
 	}
+
+	printf("*** CHECK PASSWORD***\n");
+	printf("%s : %d\n", "Abd3?Qllzmp", check_password("Abd3?Qllzmp"));
+	printf("%s : %d\n", "jgez?9A", check_password("jgez?9A"));
+	printf("%s : %d\n", "AkfeLa?la", check_password("AkfeLa?la"));
+	printf("%s : %d\n", "zerltnre?a988", check_password("zerltnre?a988"));
+	printf("%s : %d\n", "AEKRO//923", check_password("AEKRO//923"));*/
+
+	printf("%u %u %u \n", string_to_uint("325"), string_to_uint("0"), string_to_uint("946312"));
 }
+
+// TP 2
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <time.h>
+#include <string.h>
+
+/***************** EXERCICE 1 ************************/
+
+/*int nb_voyelles(char str1[]) {
+	int nbVoyelles = 0;
+	char voyelles[] = {'a','e','i','o','u','y'};
+	int tailleVoyelles = 6;
+	for (int i = 0; i < strlen(str1); i++) {
+		for (int y = 0; y < tailleVoyelles; y++) {
+			if (str1[i] == voyelles[y]) {
+				nbVoyelles++;
+				break;
+			}			
+		}
+	}
+	return nbVoyelles;
+}
+
+int compare(const char src1[],const char src2[]) {
+	int difference = 0;
+	int smaller = strlen(src1) < strlen(src2)? strlen(src1) : strlen(src2); // smaller value to not overflow
+
+	char currentLower1;
+	char currentLower2;
+
+	for (int i = 0; i <smaller; i++) {
+		// each current char in lowercase
+		currentLower1 = tolower(src1[i]);
+		currentLower2 = tolower(src2[i]);
+		// if they are different we return the difference between them
+		if (currentLower1 != currentLower2) {
+			difference = currentLower1 - currentLower2;
+			return difference;
+		}
+	}
+	// if their size is different we return the character of the longest string at the index = smaller size of string 
+	if (strlen(src1) < strlen(src2)) {
+		difference = src2[strlen(src1)];
+	}
+	else if (strlen(src1) > strlen(src2)) {
+		difference = src1[strlen(src2)];
+	}
+	// if no difference = 0
+	return difference;
+}
+
+
+void verlan(char s[]) {
+	char tempo;
+	for (int i = 0; i < strlen(s)/2; i++) {
+		tempo = s[strlen(s) - i-1];
+		s[strlen(s) - i - 1] = s[i];
+		s[i] = tempo;
+	}
+}
+
+void generate_pwd(char newpwd[]) {
+	for (int i = 0; i < 15; i++) {
+		newpwd[i] = (rand() % 93) + 33;
+	}
+	newpwd[strlen(newpwd)] = '\0';
+}
+
+/********************** EXERCICE 2 *************************/
+
+/*void repetition_code(char src[], char code[]) {
+	printf("TODO : repetition_code\n");
+}
+
+int correction_code(char code[], char decode[]) {
+	printf("TODO : correction_code\n");
+	return EXIT_SUCCESS;
+}
+
+
+int nombre_erreurs(char src[], char decodee[]) {
+	printf("TODO : nombre_erreur\n");
+	return EXIT_SUCCESS;
+}
+
+
+/********************** EXERCICE 3******************************/
+
+
+/*void delete_spaces(char src[], int i) {
+	printf("TODO : delete_spaces\n");
+}
+
+
+int wordlist_format(char src[], int nc) {
+	printf("TODO : wordlist_format\n");
+	return EXIT_SUCCESS;
+}
+
+
+/********************** EXERCICE BONUS******************************/
+
+
+/*void repetition_code_n(char src[], char code[], int n) {
+	printf("TODO : repetition_code\n");
+}
+
+
+int majority(char code[], int i, int n) {
+	printf("TODO : majority\n");
+	return EXIT_SUCCESS;
+}
+
+int correction_code_n(char code[], char decode[], int n) {
+	printf("TODO : correction_code_n\n");
+	return EXIT_SUCCESS;
+}
+
+
+
+
+int main() {
+
+	srand(time(NULL));
+	char s1[] = "Programmation C";
+	char pwd1[16], pwd2[16], pwd3[16];
+	char list1[] = "Cette  phrase va  nous \t permettre de tester  la fonction wordlist_format";
+	char msg[64] = "Cet exemple montre comment l'exercice 2 fonctionne.";
+	char code[400], decode[400];
+	int nb_indecodable, wcount;
+	char test[] = "Un       exemple";
+	char testeur[] = "Testeur";
+	char Warning[] = "Warning";
+	char cpp[] = "C++";
+
+
+	printf("######## Tests Exercice 1#######\n\n");
+	printf("Question 1\n\n");
+	printf("Voyelles dans %s : %d\n", "Testeur", nb_voyelles(testeur));
+	printf("Voyelles dans %s : %d\n", "Warning", nb_voyelles(Warning));
+	printf("Voyelles dans %s : %d\n\n", "C++", nb_voyelles(cpp));
+
+	printf("Question 2\n\n");
+	printf("Comparaison de %s et %s : %d\n", "BoNJour", "bonjoUR", compare("BoNJour", "bonjoUR"));
+	printf("Comparaison de %s et %s : %d\n", "BoNJur", "bonjoUR", compare("BoNJur", "bonjoUR"));
+	printf("Comparaison de %s et %s : %d\n\n", "B", "bo", compare("B", "bo"));
+
+	printf("Question 3\n\n");
+	verlan(s1);
+	printf("Verlan de Programmation C : %s\n\n", s1);
+
+	printf("Question 4\n\n");
+	generate_pwd(pwd1);
+	generate_pwd(pwd2);
+	generate_pwd(pwd3);
+	printf("Mots de passe:\n%s\n%s\n%s\n\n", pwd1, pwd2, pwd3);
+
+	/*printf("######## Tests Exercice 2#######\n\n");
+	printf("\nQuestion 1\n\n");
+	printf("Test code repetition\n\n");
+	repetition_code(msg, code);
+	printf("message original:\n%s\n\n", msg);
+	printf("message avec code:\n%s\n\n", code);
+
+	printf("\nQuestion 2\n\n");
+	printf("Test correction code avec introduction de 7 erreurs \n\n");
+	code[1] = '7';
+	code[2] = '0';
+	code[15] = 'Z';
+	code[31] = '%';
+	code[32] = '%';
+	code[40] = ']';
+	code[44] = '@';
+	printf("code avec bruit:\n%s\n\n", code);
+	nb_indecodable = correction_code(code, decode);
+	printf("apres decodage (indecodable : %d) :\n%s\n\n", nb_indecodable, decode);
+	printf("Nombre d'erreurs apres decodage: %d\n\n\n", nombre_erreurs(msg, decode));
+
+
+	printf("\n######## Tests Exercice 3#######\n\n");
+	printf("Chaine initiale: %s\n", test);
+	delete_spaces(test, 3);
+	printf("Espaces supprimés à partir de l'indice 3: %s\n", test);
+	printf("%s\n", list1);
+	wcount = wordlist_format(list1, 3);
+	printf("Avec nc = 3 (%d mots):\n\n%s\n\n", wcount, list1);
+	wordlist_format(list1, 4);
+	printf("Avec nc = 4 (%d mots):\n\n%s\n\n", wcount, list1);
+
+
+	//BONUS
+	printf("######## Tests Exercice BONUS avec n=5#######\n\n");
+	repetition_code_n(msg, code, 5);
+	printf("codage :\n %s\n\n", code);
+	code[1] = '7';
+	code[2] = '0';
+	code[15] = 'Z';
+	code[31] = '%';
+	code[32] = '%';
+	code[40] = ']';
+	code[44] = '@';
+	nb_indecodable = correction_code_n(code, decode, 5);
+	printf("message reçu avec erreurs:\n %s\n\n", code);
+	printf("apres decodage (indecodable : %d) :\n%s\n\n", nb_indecodable, decode);
+	printf("Nombre d'erreurs apres decodage: %d\n", nombre_erreurs(msg, decode));
+
+	return 0;
+}*/
