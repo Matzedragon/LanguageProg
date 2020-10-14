@@ -619,7 +619,8 @@ int main() {
 	filter(dest, 'o');
 	printf("%s\n", dest);
 }*/
-#include <string.h>
+
+/*#include <string.h>
 #include <stdio.h>
 #include <ctype.h>
 void letter_occurrences(char in_txt[], char occ[]) {
@@ -689,10 +690,55 @@ int main() {
 	printf("%s : %d\n", "jgez?9A", check_password("jgez?9A"));
 	printf("%s : %d\n", "AkfeLa?la", check_password("AkfeLa?la"));
 	printf("%s : %d\n", "zerltnre?a988", check_password("zerltnre?a988"));
-	printf("%s : %d\n", "AEKRO//923", check_password("AEKRO//923"));*/
+	printf("%s : %d\n", "AEKRO//923", check_password("AEKRO//923"));
 
 	printf("%u %u %u \n", string_to_uint("325"), string_to_uint("0"), string_to_uint("946312"));
+}*/
+
+//Le mot le plus long
+/*#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+int longest_word(const char in_txt[], char out_word[]) {
+	int longest = 0;
+	int curTaille = 0;
+	int index = 0;
+	char curChar;
+	int i;
+	for ( i = 0; i < strlen(in_txt); i++) {
+		curChar = tolower(in_txt[i]);
+		if (curChar >= 'a' && curChar <= 'z') {
+			curTaille++;
+		}
+		else if (curChar == ' ') {
+			if (curTaille > longest) {
+				longest = curTaille;			
+				index = i-longest;
+			}
+			curTaille = 0;
+		}
+	}
+	if (curTaille > longest) {
+		longest = curTaille;
+		curTaille = 0;
+		index = i-longest;
+	}
+	for (int y = 0; y < longest; y++) {
+		printf("%c char\n", in_txt[index + y]);
+		out_word[y] = in_txt[index + y];
+	}
+	out_word[longest] = '\0';
+	return longest;
 }
+
+int main() {
+	char dest [20];
+	printf("Mot le plus long (taille : %d) = %s\n", longest_word("programming  language"
+		"computer number cryptography   code  theory  processing system file", dest), dest);
+
+	printf("Mot le plus long (taille : %d) = %s\n", longest_word("blue green red cyan "
+		"orange yellow black white magenta", dest), dest);
+}*/
 
 // TP 2
 #include <stdio.h>
@@ -703,7 +749,7 @@ int main() {
 
 /***************** EXERCICE 1 ************************/
 
-/*int nb_voyelles(char str1[]) {
+int nb_voyelles(char str1[]) {
 	int nbVoyelles = 0;
 	char voyelles[] = {'a','e','i','o','u','y'};
 	int tailleVoyelles = 6;
@@ -757,39 +803,84 @@ void verlan(char s[]) {
 }
 
 void generate_pwd(char newpwd[]) {
-	for (int i = 0; i < 15; i++) {
-		newpwd[i] = (rand() % 93) + 33;
+	int i;
+	for (i = 0; i < 15; i++) {
+		newpwd[i] = (rand() % 93) + 33; // 33 = '!' first printable char
 	}
-	newpwd[strlen(newpwd)] = '\0';
+	newpwd[i] = '\0';
 }
 
 /********************** EXERCICE 2 *************************/
 
-/*void repetition_code(char src[], char code[]) {
-	printf("TODO : repetition_code\n");
+void repetition_code(char src[], char code[]) {
+	int i, y;
+	for (i = 0; i < strlen(src); i++) {
+		for (y = 0; y < 3; y++) {
+			code[i * 3 + y] = src[i];
+		}
+	}
+	code[i * 3] = '\0';
 }
 
 int correction_code(char code[], char decode[]) {
-	printf("TODO : correction_code\n");
+	int i = 0;
+	char tempo;
+	int tempotest=0;
+	for(i = 0; i<strlen(code)/3;i++){
+		tempo = code[i * 3];
+		if (tempo == code[i * 3 + 1] || tempo == code[i * 3 + 2]) {
+			decode[i] = tempo;
+		}
+		else {
+			if (code[i * 3 + 1] == code[i * 3 + 2]) {
+				decode[i] = code[i * 3 + 1];
+			}
+			else {
+				decode[i] = tempo;
+			}
+		}
+	}
+	decode[i] = '\0';
 	return EXIT_SUCCESS;
 }
 
 
 int nombre_erreurs(char src[], char decodee[]) {
-	printf("TODO : nombre_erreur\n");
-	return EXIT_SUCCESS;
+	int erreur = 0;
+	int i = 0;
+	while (src[i]!= '\0') {
+		if (src[i] != decodee[i]) {
+			erreur++;
+		}
+		i++;
+	}
+	return erreur;
 }
 
 
 /********************** EXERCICE 3******************************/
 
 
-/*void delete_spaces(char src[], int i) {
-	printf("TODO : delete_spaces\n");
+void delete_spaces(char src[], int i) {
+	int nbrspace = 0;
+	int j;
+	while (src[i] != '\0') {
+		j = i;
+		while (src[j] == ' ') {
+			nbrspace++;
+			j++;
+		}
+		if (src[j] != '\0' && nbrspace > 1) {
+			/*faire un while*/
+			for (int y = i; y < nbrspace; y++) {
+				src[i + y] = src[i + nbrspace + y];
+			}
+		}
+	}
 }
 
 
-int wordlist_format(char src[], int nc) {
+/*int wordlist_format(char src[], int nc) {
 	printf("TODO : wordlist_format\n");
 	return EXIT_SUCCESS;
 }
@@ -811,7 +902,7 @@ int majority(char code[], int i, int n) {
 int correction_code_n(char code[], char decode[], int n) {
 	printf("TODO : correction_code_n\n");
 	return EXIT_SUCCESS;
-}
+}*/
 
 
 
@@ -852,7 +943,7 @@ int main() {
 	generate_pwd(pwd3);
 	printf("Mots de passe:\n%s\n%s\n%s\n\n", pwd1, pwd2, pwd3);
 
-	/*printf("######## Tests Exercice 2#######\n\n");
+	printf("######## Tests Exercice 2#######\n\n");
 	printf("\nQuestion 1\n\n");
 	printf("Test code repetition\n\n");
 	repetition_code(msg, code);
@@ -879,7 +970,7 @@ int main() {
 	delete_spaces(test, 3);
 	printf("Espaces supprimés à partir de l'indice 3: %s\n", test);
 	printf("%s\n", list1);
-	wcount = wordlist_format(list1, 3);
+	/*wcount = wordlist_format(list1, 3);
 	printf("Avec nc = 3 (%d mots):\n\n%s\n\n", wcount, list1);
 	wordlist_format(list1, 4);
 	printf("Avec nc = 4 (%d mots):\n\n%s\n\n", wcount, list1);
@@ -900,6 +991,6 @@ int main() {
 	printf("message reçu avec erreurs:\n %s\n\n", code);
 	printf("apres decodage (indecodable : %d) :\n%s\n\n", nb_indecodable, decode);
 	printf("Nombre d'erreurs apres decodage: %d\n", nombre_erreurs(msg, decode));
-
+	*/
 	return 0;
-}*/
+}
