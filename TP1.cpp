@@ -1104,10 +1104,11 @@ int main() {
 	case 4:break;
 	case 5:break;
 	}
+	//TODO passer ça dans la méthode
 	while (infile == NULL || outfile == NULL) {
 		entreeFichier(enLecture, enEcriture);
 		infile = fopen(enLecture, "r");
-		outfile = fopen(enEcriture, "r");
+		outfile = fopen(enEcriture, "w");
 	}
 	switch (afficherMenu()) {
 	case 1:break;
