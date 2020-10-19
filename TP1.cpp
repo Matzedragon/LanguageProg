@@ -1,4 +1,4 @@
-// TP1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+Ôªø// TP1.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 
@@ -14,7 +14,7 @@ int main()
 	int age; 
 	printf("entrez l'age du client:\n");
 	tempo = scanf_s("%d", &age);
-	printf("Le client est-il Ètudiant (1: oui, 0: non)?\n");
+	printf("Le client est-il √©tudiant (1: oui, 0: non)?\n");
 	tempo = scanf_s("%d", &t);
 	if (t == 1) {
 		etudiant = true;
@@ -52,12 +52,12 @@ int main() {
 		printf("Entrer un nombre entier entre 0 et 99 :\n");
 		scanf_s("%d", &entreeUser);
 		if (entreeUser < randint)
-			printf("Le nombre ‡ deviner est plus grand!\n");
+			printf("Le nombre √† deviner est plus grand!\n");
 		if (entreeUser > randint) 
-			printf("Le nombre ‡ deviner est plus petit!\n");
+			printf("Le nombre √† deviner est plus petit!\n");
 		nbrEssai += 1;
 	}while (entreeUser != randint);
-	printf("TrouvÈ! Vous avez utilisÈ %d essai(s)", nbrEssai);
+	printf("Trouv√©! Vous avez utilis√© %d essai(s)", nbrEssai);
 }*/
 
 // QUESTION 2 BONUS
@@ -71,7 +71,7 @@ int main() {
 	bool trouve = false;
 	do {
 		printf("Je propose %d\n",guess);
-		printf("Entrez \n = si c'est gagnÈ\n + si la valeur est plus grande\n - si la valeur est plus petite\n");
+		printf("Entrez \n = si c'est gagn√©\n + si la valeur est plus grande\n - si la valeur est plus petite\n");
 		scanf_s(" %c", &rep);
 		if (rep == '=') {
 			trouve = true;
@@ -126,11 +126,11 @@ int main() {
 		case(5):gain = 25000; break;
 	}
 
-	printf("Nombre de bon numÈros : %d\n", bonNum);
+	printf("Nombre de bon num√©ros : %d\n", bonNum);
 	if (gain != 0)
-		printf("Vous avez gagnÈ %d euros", gain);
+		printf("Vous avez gagn√© %d euros", gain);
 	else
-		printf("Vous n'avez rien gagnÈ");
+		printf("Vous n'avez rien gagn√©");
 }*/
 
 // QUESTION 4
@@ -164,15 +164,15 @@ int main() {
 	bool fin = false;
 	int result;
 	do {
-		printf("Entrez une opÈration parmi * + - /  %% (q pour quitter):\n");
+		printf("Entrez une op√©ration parmi * + - /  %% (q pour quitter):\n");
 		scanf_s(" %c", &operande);
 		if (operande == 'q') {
 			break;
 		}
-		printf("Entrez le premier opÈrande:\n");
+		printf("Entrez le premier op√©rande:\n");
 		scanf_s(" %d", &premNombre);
 		do {
-			printf("Entrez le deuxiËme opÈrande:\n");
+			printf("Entrez le deuxi√®me op√©rande:\n");
 			scanf_s("%d", &deuxNombre);
 
 			invalide = false;
@@ -219,7 +219,7 @@ int main() {
 /*int main() {
 	float x; float result;
 	int a;
-	printf("entrez la valeur ‡ mettre ‡ la puissance : ");
+	printf("entrez la valeur √† mettre √† la puissance : ");
 	scanf_s("%f", &x);
 	printf("entrez la valeur de la puissance : ");
 	scanf_s("%d", &a);
@@ -315,7 +315,7 @@ int main() {
 	float moyG2=0;
 	float moyG3=0;
 	for (int i = 0; i < TAILLE_PROMO; i++) {
-		printf("Note de l'Ètudiant %d : ", i);
+		printf("Note de l'√©tudiant %d : ", i);
 		scanf_s("%f", promo + i);
 		moyPro += promo[i];
 	}
@@ -433,12 +433,12 @@ int main() {
 	int tabseq[] = { 3,5,5,5,7,9,12,2, 4, 1, 6, 6, 6, 6, 85, 10, 6 };
 	//fusion_simple(dest, src1, src2, 5);
 	//fusion_tri(dest, src1, 5, src2, 6);
-	//printf("la plus longue sÈquence contigues = %d",taille_sequence(tabseq, 17));
+	//printf("la plus longue s√©quence contigues = %d",taille_sequence(tabseq, 17));
 	printf("%d", versus(tab1, 10, tab2, 6));
 	return 0;
 }*/
 
-//arithmetique multi-prÈcision 
+//arithmetique multi-pr√©cision 
 
 /*#include <stdio.h>
 #define SIZETAB 5
@@ -446,8 +446,8 @@ int main() {
 
 int number_length(char b[], int lb) {
 	int existe =0;
-	// commencer par le poid fort du nombre quand la valeur est diffÈrente de 0
-	//c'est le dÈbut du nombre donc on sait que le nombre va de i ‡ 0
+	// commencer par le poid fort du nombre quand la valeur est diff√©rente de 0
+	//c'est le d√©but du nombre donc on sait que le nombre va de i √† 0
 	for (int i = lb - 1; i > 0; i--) {
 		if (b[i] != 0) {
 			existe = i+1;
@@ -468,7 +468,7 @@ char addition(char a[], int la, char b[], int lb) {
 	else {
 		for (i = 0; i < lb; i++) {
 			tempo = (a[i] + b[i] + retenue);
-			// si a[i] + b[i] + retenue ( = 0 ou 1) est supÈ ‡ 100 alors initialise la retenue et on enlËve 100 ‡ tempo
+			// si a[i] + b[i] + retenue ( = 0 ou 1) est sup√© √† 100 alors initialise la retenue et on enl√®ve 100 √† tempo
 			if (tempo >= 100) {
 				retenue = 1;
 				a[i] = (tempo - 100);
@@ -539,9 +539,9 @@ int main() {
 	}
 	printf("\ntaille = %d ",number_length(tab, SIZETAB));
 	printf("\nresult addition : %d", addition(tab, SIZETAB, tab, SIZETAB));
-	printf("\nresult compare : %d supposÈ = 1 car test > tab", compare( test, 5, tab, SIZETAB));
-	printf("\nresult compare : %d supposÈ = -1 car tab != test et pas >", compare(tab, SIZETAB, test, 5 ));
-	printf("\nresult compare : %d supposÈ = 0 car tab = tab", compare(tab, SIZETAB, tab, SIZETAB));
+	printf("\nresult compare : %d suppos√© = 1 car test > tab", compare( test, 5, tab, SIZETAB));
+	printf("\nresult compare : %d suppos√© = -1 car tab != test et pas >", compare(tab, SIZETAB, test, 5 ));
+	printf("\nresult compare : %d suppos√© = 0 car tab = tab", compare(tab, SIZETAB, tab, SIZETAB));
 }*/
 
 // TD 3
@@ -549,7 +549,7 @@ int main() {
 /*#include <stdio.h>
 #include <string.h>
 #include < ctype.h>*/
-//Fonctions sur les caractËres
+//Fonctions sur les caract√®res
 /*int char_to_int(char c) {
 	if (c >= '0' && c <= '9') {
 		return c - 48;
@@ -578,7 +578,7 @@ void concat_n(char dest[], char src[], int n) {
 	char currentChar;
 	size_t i = -1;
 	int y = 0;
-	// permet de connaitre ‡ partir de quel index de dest il faut concatener ( avant \0)
+	// permet de connaitre √† partir de quel index de dest il faut concatener ( avant \0)
 	i = strlen(dest);
 	while (src[y] != '\0' && y<n) {
 		dest[i] = src[y];
@@ -667,11 +667,11 @@ int check_password(const char passwd[]) {
 unsigned int string_to_uint(const char tab[]) {
 	int result = 0;
 	int puissance = 1;
-	int i = strlen(tab)-1;// pour commencer au point faible du nombre, donc ‡ la fin du tableau
+	int i = strlen(tab)-1;// pour commencer au point faible du nombre, donc √† la fin du tableau
 	while (i>=0) {
 		result += (tab[i] - 48) * puissance; // on mutliplie chaque nombre par la puissance actuelle et on l'ajoute au resultat
 		i--;
-		puissance *= 10; // la puissance augmente vu qu'on passe au prochaine caractËre.
+		puissance *= 10; // la puissance augmente vu qu'on passe au prochaine caract√®re.
 	}
 	return result;
 }
@@ -863,18 +863,12 @@ int nombre_erreurs(char src[], char decodee[]) {
 /*void delete_spaces(char src[], int i) {
 	int nbrspace = 0;
 	int j;
-	while (src[i] != '\0') {
-		j = i;
-		while (src[j] == ' ') {
-			nbrspace++;
-			j++;
-		}
-		if (src[j] != '\0' && nbrspace > 1) {
-			//aire un while
-			for (int y = i; y < nbrspace; y++) {
-				src[i + y] = src[i + nbrspace + y];
-			}
-		}
+	while(isspace(src[i+nbrspace])) {
+		nbrspace++;
+	}
+	while(src[i+j+nbrspace] != '\0') {
+		src[i+j] = src[i+j+nbrspace];
+		j++;
 	}
 }
 
@@ -967,7 +961,7 @@ int correction_code_n(char code[], char decode[], int n) {
 	printf("\n######## Tests Exercice 3#######\n\n");
 	printf("Chaine initiale: %s\n", test);
 	delete_spaces(test, 3);
-	printf("Espaces supprimÈs ‡ partir de l'indice 3: %s\n", test);
+	printf("Espaces supprim√©s √† partir de l'indice 3: %s\n", test);
 	printf("%s\n", list1);
 	/*wcount = wordlist_format(list1, 3);
 	printf("Avec nc = 3 (%d mots):\n\n%s\n\n", wcount, list1);
@@ -987,7 +981,7 @@ int correction_code_n(char code[], char decode[], int n) {
 	code[40] = ']';
 	code[44] = '@';
 	nb_indecodable = correction_code_n(code, decode, 5);
-	printf("message reÁu avec erreurs:\n %s\n\n", code);
+	printf("message re√ßu avec erreurs:\n %s\n\n", code);
 	printf("apres decodage (indecodable : %d) :\n%s\n\n", nb_indecodable, decode);
 	printf("Nombre d'erreurs apres decodage: %d\n", nombre_erreurs(msg, decode));
 	
@@ -995,7 +989,7 @@ int correction_code_n(char code[], char decode[], int n) {
 }*/
 
 // TD 4
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #define TAILLENOM 64
@@ -1021,7 +1015,7 @@ athlete saisie_athlete() {
 	int i = 0;
 	int age;
 	printf("veuillez entrer le nom de l'athlete : ");
-	//scanf_s("%s", currentAthlete.nom); c'est juste mÈ Áa marche pas lolol
+	//scanf_s("%s", currentAthlete.nom); c'est juste m√© √ßa marche pas lolol
 	printf("\nveuillez entrer le prenom de l'athlete : ");
 	//scanf_s("%s", currentAthlete.prenom); same as above
 	printf("\nage : ");
@@ -1039,4 +1033,91 @@ athlete saisie_athlete() {
 	} while (chrono > 0);
 	return currentAthlete;
 }
+*/
 
+// TP 3
+#include <stdlib.h>
+#include <stdio.h>
+int number_of_lines(char inpath[]) {	
+	char newline[128];
+	int nbrLigne =0;
+	FILE* fichier;
+	fopen_s(&fichier, inpath,"r");
+
+	if (fichier == NULL)
+	{
+		printf("Fichier introuvable\n");
+		exit(-1);
+	}
+	while (fgets(newline, 128, fichier)) {
+		nbrLigne++;
+	}
+	fclose(fichier);
+	return nbrLigne;
+}
+
+int afficherMenu() {
+	int choix;
+	printf("1 - color_rgb_circular_permutation\n"
+		"2 - brightness\n"
+		"3 - encryption_simple\n"
+		"4 - encryption_improved\n"
+		"5 - decryption_improved\n"
+		"0 - quitter\n");
+	printf("Votre choix : ");
+	scanf_s("%d", &choix);
+	return choix;
+}
+
+void entreeFichier(char enLecture[], char enEcriture[]) {
+	printf("Fichier √† ouvrir en lecture : ");
+	scanf_s("%s", enLecture, 127);
+
+	printf("Fichier √† ouvrir en ecriture : ");
+	scanf_s("%s", enEcriture, 127);
+}
+
+void ppm_header_copy(FILE* infile, FILE* outfile) {
+	char tempo[256];
+	int nbligne = 4;
+	if ((infile != NULL) && (outfile != NULL)) {
+		while (fgets(tempo, 256, infile) && (nbligne>0)) {
+			fputs(tempo, outfile);
+			nbligne--;
+			printf("test");
+		}
+	}
+}
+
+int main() {
+	char enLecture[128];
+	char enEcriture[128];
+	FILE *infile = NULL;
+	FILE *outfile = NULL;
+	char path[] = "D:\\Users\\Matzedragon\\Desktop\\LanguageProg\\TP3\\ex1\\alice.txt";
+	char workPath[128] = "";
+	printf("%d lignes\n", number_of_lines(path));
+	switch (afficherMenu()) {
+	case 1:break;
+	case 2:break;
+	case 3:break;
+	case 4:break;
+	case 5:break;
+	}
+	while (infile == NULL || outfile == NULL) {
+		entreeFichier(enLecture, enEcriture);
+		infile = fopen(enLecture, "r");
+		outfile = fopen(enEcriture, "r");
+	}
+	switch (afficherMenu()) {
+	case 1:break;
+	case 2:break;
+	case 3:break;
+	case 4:break;
+	case 5:break;
+	}
+	//TODO PlaceHolder = null, je pige pas pk, genre le stream revient √† null
+	ppm_header_copy(infile, outfile);
+	fclose(infile);
+	fclose(outfile);
+}
