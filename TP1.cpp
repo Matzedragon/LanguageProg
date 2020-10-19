@@ -706,11 +706,11 @@ int longest_word(const char in_txt[], char out_word[]) {
 	char curChar;
 	int i;
 	for ( i = 0; i < strlen(in_txt); i++) {
-		curChar = tolower(in_txt[i]);
-		if (curChar >= 'a' && curChar <= 'z') {
+		curChar = in_txt[i];
+		if (curChar != ' ') {
 			curTaille++;
 		}
-		else if (curChar == ' ') {
+		else {
 			if (curTaille > longest) {
 				longest = curTaille;			
 				index = i-longest;
@@ -724,7 +724,6 @@ int longest_word(const char in_txt[], char out_word[]) {
 		index = i-longest;
 	}
 	for (int y = 0; y < longest; y++) {
-		printf("%c char\n", in_txt[index + y]);
 		out_word[y] = in_txt[index + y];
 	}
 	out_word[longest] = '\0';
@@ -733,7 +732,7 @@ int longest_word(const char in_txt[], char out_word[]) {
 
 int main() {
 	char dest [20];
-	printf("Mot le plus long (taille : %d) = %s\n", longest_word("programming  language"
+	printf("Mot le plus long (taille : %d) = %s\n", longest_word("programming  language "
 		"computer number cryptography   code  theory  processing system file", dest), dest);
 
 	printf("Mot le plus long (taille : %d) = %s\n", longest_word("blue green red cyan "
@@ -741,7 +740,7 @@ int main() {
 }*/
 
 // TP 2
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
@@ -749,7 +748,7 @@ int main() {
 
 /***************** EXERCICE 1 ************************/
 
-int nb_voyelles(char str1[]) {
+/*int nb_voyelles(char str1[]) {
 	int nbVoyelles = 0;
 	char voyelles[] = {'a','e','i','o','u','y'};
 	int tailleVoyelles = 6;
@@ -812,7 +811,7 @@ void generate_pwd(char newpwd[]) {
 
 /********************** EXERCICE 2 *************************/
 
-void repetition_code(char src[], char code[]) {
+/*void repetition_code(char src[], char code[]) {
 	int i, y;
 	for (i = 0; i < strlen(src); i++) {
 		for (y = 0; y < 3; y++) {
@@ -861,7 +860,7 @@ int nombre_erreurs(char src[], char decodee[]) {
 /********************** EXERCICE 3******************************/
 
 
-void delete_spaces(char src[], int i) {
+/*void delete_spaces(char src[], int i) {
 	int nbrspace = 0;
 	int j;
 	while (src[i] != '\0') {
@@ -871,7 +870,7 @@ void delete_spaces(char src[], int i) {
 			j++;
 		}
 		if (src[j] != '\0' && nbrspace > 1) {
-			/*faire un while*/
+			//aire un while
 			for (int y = i; y < nbrspace; y++) {
 				src[i + y] = src[i + nbrspace + y];
 			}
@@ -907,7 +906,7 @@ int correction_code_n(char code[], char decode[], int n) {
 
 
 
-int main() {
+/*int main() {
 
 	srand(time(NULL));
 	char s1[] = "Programmation C";
@@ -991,6 +990,53 @@ int main() {
 	printf("message reçu avec erreurs:\n %s\n\n", code);
 	printf("apres decodage (indecodable : %d) :\n%s\n\n", nb_indecodable, decode);
 	printf("Nombre d'erreurs apres decodage: %d\n", nombre_erreurs(msg, decode));
-	*/
+	
 	return 0;
+}*/
+
+// TD 4
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#define TAILLENOM 64
+struct athlete_struct {
+	char nom[TAILLENOM];
+	char prenom[TAILLENOM];
+	char categorie;
+	double chronos[256];
+};
+
+typedef struct athlete_struct athlete;
+
+void formater_nom(char nom[]) {
+	nom[0] = toupper(nom[0]);
+	for (int i = 1; i < strlen(nom); i++) {
+		nom[i] =tolower(nom[i]);
+	}
 }
+
+athlete saisie_athlete() {
+	athlete currentAthlete{};
+	double chrono;
+	int i = 0;
+	int age;
+	printf("veuillez entrer le nom de l'athlete : ");
+	//scanf_s("%s", currentAthlete.nom); c'est juste mé ça marche pas lolol
+	printf("\nveuillez entrer le prenom de l'athlete : ");
+	//scanf_s("%s", currentAthlete.prenom); same as above
+	printf("\nage : ");
+	scanf_s("%d",&age);
+	if (age < 14) currentAthlete.categorie = 'B';
+	else if (age < 14) currentAthlete.categorie = 'J';
+	else if (age < 14) currentAthlete.categorie = 'E';
+	else currentAthlete.categorie = 'S';
+	do {
+		scanf_s("%f", &chrono);
+		if (chrono > 0) {
+			currentAthlete.chronos[i]= chrono;
+			i++;
+		}
+	} while (chrono > 0);
+	return currentAthlete;
+}
+
