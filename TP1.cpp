@@ -989,7 +989,7 @@ int correction_code_n(char code[], char decode[], int n) {
 }*/
 
 // TD 4
-/*#include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #define TAILLENOM 64
@@ -1002,7 +1002,7 @@ struct athlete_struct {
 
 typedef struct athlete_struct athlete;
 
-void formater_nom(char nom[]) {
+/*void formater_nom(char nom[]) {
 	nom[0] = toupper(nom[0]);
 	for (int i = 1; i < strlen(nom); i++) {
 		nom[i] =tolower(nom[i]);
@@ -1026,17 +1026,81 @@ athlete saisie_athlete() {
 	else currentAthlete.categorie = 'S';
 	do {
 		scanf_s("%f", &chrono);
-		if (chrono > 0) {
-			currentAthlete.chronos[i]= chrono;
+		if (chrono >= 0) {
+			currentAthlete.chronos[i] = chrono;
 			i++;
 		}
 	} while (chrono > 0);
 	return currentAthlete;
 }
-*/
+
+void afficher_athlete(athlete a) {
+	int i = 0;
+	printf("%s %s (cat : %c)\n", a.nom, a.prenom, a.categorie);
+	while (a.chronos[i] != 0) {
+		printf("%lg ", a.chronos[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+double meilleur_chrono(athlete a) {
+	int i = 1;
+	double max = a.chronos[0];
+	while (a.chronos[i] != 0) {
+		if (a.chronos[i] < max)
+			max = a.chronos[i];
+		i++;
+	}
+	return max;
+}
+
+double moyenne_chronos(athlete a) {
+	int i = 0;
+	double moyenne = 0;
+	while (a.chronos[i] != 0) {
+		moyenne += a.chronos[i];
+		i++;
+	}
+	return moyenne?moyenne:moyenne /= i-1;
+}
+
+double moyenne_categorie(athlete club[], int nb_adherants, char cat) {
+	double moyenne = 0;
+	int nbDansCat = 0;
+	for (int i = 0; i < nb_adherants; i++) {
+		if (club[i].categorie == cat) {
+			moyenne += moyenne_chronos(club[i]);
+			nbDansCat++;
+		}
+	}
+	return nbDansCat ? nbDansCat : moyenne/nbDansCat;	// s' il n y a aucun athelete dans la cat donnée on renvoi 0 sinon on divise le total des moyennes 
+														// par le nb d'athletes dans le tableau club qui correspondent à la catégorie donnée
+}
+
+int meilleur_categorie(athlete club[], int nb_adherants, char cat) {
+	int i = 0;
+	int meilleurTime = 0;
+	int indexMeilleur = -1;
+	while (meilleurTime == 0)
+	{
+		if (club[i].categorie == cat) {
+			meilleurTime = meilleur_chrono(club[i]);
+			indexMeilleur = i;
+		}
+		i++;
+	}
+	for (i; i < nb_adherants; i++) { // i = indexMeilleur+1
+		if ((club[i].categorie == cat)&& (meilleur_chrono(club[i])<meilleurTime)) {
+			meilleurTime = meilleur_chrono(club[i]);
+			indexMeilleur = i;
+		}
+	}
+	return indexMeilleur;
+}*/
 
 // TP 3
-#include <stdlib.h>
+/*#include <stdlib.h>
 #include <stdio.h>
 int number_of_lines(char inpath[]) {	
 	char newline[128];
@@ -1117,8 +1181,82 @@ int main() {
 	case 4:break;
 	case 5:break;
 	}
-	//TODO PlaceHolder = null, je pige pas pk, genre le stream revient à null
 	ppm_header_copy(infile, outfile);
 	fclose(infile);
 	fclose(outfile);
+}*/
+
+//TD 5
+#include <stdio.h>
+void swap(int* val1, int* val2) {
+	int save;
+	save = *val1;
+	*val1 = *val2;
+	*val2 = save;
+}
+int string_length(char* s) {
+	int size = 0;
+	while (*s++ != '\0') {
+		printf("%c", *s);
+		size++;
+	}
+	
+	return size;
+}
+
+double meilleur_chrono(athlete* a) {
+	int i = 1;
+	double max = a->chronos[0];
+	while (a->chronos[i] != 0) {
+		if (a->chronos[i] < max)
+			max = a->chronos[i];
+		i++;
+	}
+	return max;
+}
+
+// Q4 si on passe directement un athlete en argument ça créer une copie de l'objet alors qu'un pointeur 
+// pointe direct sur l'objet, donc on divise la place dans la mémoire par deux.
+
+//Arithmétique des pointeurs
+
+
+int main() {
+
+	int val1 = 12;
+	int val2 = 13;
+	char tab[] = "string test";
+	char* s = tab;
+	swap(&val1, &val2);
+	printf("val1 = %d, val2 = %d\n", val1, val2);
+	printf("stringlength = %d\n", string_length(s));
+
+	char T[] = { 20,67,10,1,0,6,34,56,98,45,12 };
+	char* p = T;
+	//T[5] = 6,		T+5 = 105,	&p[2] = 102,	 *T+5 = 6,		*(T+5) = 6,		&T = 100,	&p = 100,	p+(*p+1) = 119,		*(T) * *(T+2)-T[3] = 199
+	//Exemples de codes
+	/*int a = 7;
+	printf("valeur de l'entier a: %d",&a);
+	faux -> affiche l'adresse
+	 
+	int bret[4] ={22,29,35,56};
+	printf("4eme departement : %d",bret[4]);
+	bret[4] buffer overflow 
+	 
+	double pdouble = (double) malloc (sizeof(double)); ça marche
+
+	double* p1, p2;
+	p1 = &p2;
+	marche mais p2 undeterminé
+
+	int* p3;
+	int t[3]={2,4,8};
+	p3 = t; marche
+
+	int t2[5],*p4;
+	p4 =(int)  malloc(5*sizeof(int));
+	t2=p4; marche
+
+	 */
+	//Fonction et allocation dynamique
 }
