@@ -1187,8 +1187,9 @@ int main() {
 }*/
 
 //TD 5
-/*#include <stdio.h>
-void swap(int* val1, int* val2) {
+#include <stdlib.h>
+#include <stdio.h>
+/*void swap(int* val1, int* val2) {
 	int save;
 	save = *val1;
 	*val1 = *val2;
@@ -1219,6 +1220,46 @@ double meilleur_chrono(athlete* a) {
 // pointe direct sur l'objet, donc on divise la place dans la mémoire par deux.
 
 //Arithmétique des pointeurs
+// EX 5*/
+double* alloc_double(double n) {
+	int i = 1;
+	int j = n;
+	double* pr;
+	pr = (double*)malloc(n* sizeof(double));
+	while (j > 0) {
+		if (i % 2) {
+			pr[j-1] = i;
+			j--;
+		}
+		i++;
+	}
+	return pr;
+}
+
+double* concat(double * tab1, int taille1, double* tab2, int taille2) {
+	int i;
+	int j;
+	double* concatened = (double*)malloc((taille1 + taille2) * sizeof(double));
+	for (i= 0; i < taille1; i++) {
+		concatened[i] = tab1[i];
+	}
+	for (j = 0; j < taille2; j++,i++) {
+		concatened[i] = tab2[j];
+	}
+	return concatened;
+}
+
+void exo3(double** tab1, int taille1, double* tab2, int taille2) {
+	int i;
+	int j;
+	int tailleTot = taille1 + taille2;
+	*tab1 = (double*)realloc(*tab1, tailleTot * sizeof(double));
+	
+	for (i = taille1, j = 0; i < taille1+taille2; i++, j++) {
+		(*tab1)[i] = tab2[j];
+	}
+	printf("%p adresse après realloc dans méthode\n", tab1);
+}
 
 
 int main() {
@@ -1227,14 +1268,16 @@ int main() {
 	int val2 = 13;
 	char tab[] = "string test";
 	char* s = tab;
-	swap(&val1, &val2);
+	/*swap(&val1, &val2);
 	printf("val1 = %d, val2 = %d\n", val1, val2);
 	printf("stringlength = %d\n", string_length(s));
 
 	char T[] = { 20,67,10,1,0,6,34,56,98,45,12 };
-	char* p = T;
+	char* p = T;*/
 	//T[5] = 6,		T+5 = 105,	&p[2] = 102,	 *T+5 = 6,		*(T+5) = 6,		&T = 100,	&p = 100,	p+(*p+1) = 119,		*(T) * *(T+2)-T[3] = 199
+
 	//Exemples de codes
+
 	/*int a = 7;
 	printf("valeur de l'entier a: %d",&a);
 	faux -> affiche l'adresse
@@ -1243,7 +1286,7 @@ int main() {
 	printf("4eme departement : %d",bret[4]);
 	bret[4] buffer overflow 
 	 
-	double pdouble = (double) malloc (sizeof(double)); ça marche
+	double pdouble = (double) malloc (sizeof(double)); faut que ce soit un pointeur, malloc renvoie une adresse ? double* pdouble = (double*) malloc (sizeof(double));
 
 	double* p1, p2;
 	p1 = &p2;
@@ -1255,83 +1298,37 @@ int main() {
 
 	int t2[5],*p4;
 	p4 =(int)  malloc(5*sizeof(int));
-	t2=p4; marche
+	t2=p4; marche pas, p4 est un poiteur et on cast un int
 
 	 */
+	//EX 5 main
 	//Fonction et allocation dynamique
-//}
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h> // pour strlen, stncmp
-#include <ctype.h> // pour toupper
-
-
-
-/*Question 1*/
-char* find_word(char* text, const char* word) {
-	int i = 0;
-	int save = 0;
-	while (text[i] != '\0' && save < strlen(word)) {
-		// vérifie char par char avec une sauvegarde
-		if (strncmp(text + i, word+save, 1) == 0) { // save = nombre de char de word trouvés d'affilés
-			save++;
-		}
-		else {
-			save = 0; // si la lettre ne correspond pas on reset
-		}
-		i++;
+	double* pointeur;
+	double* pointeur2;
+	double* resultexo2;
+	double taille = 13.0;
+	pointeur = alloc_double(taille);
+	pointeur2 = alloc_double(taille*2);
+	printf("EXO1\n");
+	for (int i = 0; i < taille; i++) {
+		printf("%f - ", pointeur[i]);
 	}
-	if (save == strlen(word)) {
-		return text + i-save;
+	printf("\n\nEXO1 2 eme tab\n");
+	for (int i = 0; i < taille*2; i++) {
+		printf("%f - ", pointeur2[i]);
 	}
-	return text;
-}
-
-
-/*Question 2*/
-void capitalize_word(char* text, const char* word) {
-	int size = 0;
-	char* tempo = find_word(text, word); // on récup le début de l'occurence avec le word
-	for (int i = 0; i < strlen(word); i++) {
-		*(tempo+i) = toupper(*(tempo + i)); // on met en majuscule à l'adresse pointé à partir de la première occurence du word jusqu'à sa taille
+	printf("\n\nEXO2\n");
+	resultexo2 = concat(pointeur, taille, pointeur, taille);
+	for (int i = 0; i < taille*2; i++) {
+		printf("%f - ", resultexo2[i]);
 	}
-}
+	printf("\n\nEXO 3\n");
 
+	printf("%p adresse pointeur avant\n", pointeur);
+	exo3(&pointeur, taille, pointeur2, taille*2);
+	printf("%p adresse pointeur après \n\n", pointeur);
 
-/*Question 3*/
-int word_occurrences(char* text, const char* word) {
-	char* tempo = find_word(text,word);
-	char* save = text;
-	int occur = 0;
-	while (save != tempo) {
-		occur++;
-		save = tempo + strlen(word);
-		tempo = find_word((tempo+strlen(word)), word);
+	for (int i = 0; i < taille * 3; i++) {
+		printf("%f - ", pointeur[i]);
 	}
-	return occur;
-}
-
-
-
-int main() {
-	char texte[] = "Ce texte servira d'exemple pour l'exercice sur l'arithmetique des pointeurs et les chaines de caracteres."
-		" Cet exemple permet aussi de rappeler qu'un pointeur sur un caractere d'une chaine permet immediatement de definir"
-		" une sous chaine qui commence par le caractere dont le pointeur est l'adresse.";
-
-	//ex1
-	printf("find_word(texte,\"%s\"):\n", "aussi");
-	printf("%s\n\n", find_word(texte, "aussi"));
-	
-	printf("find_word(texte,\"%s\"):\n", "dont");
-	printf("%s\n\n", find_word(texte, "dont"));
-
-	//ex2
-	printf("word_occurrences(texte,\"%s\"): %d\n", "chaine", word_occurrences(texte, "exemple"));
-	printf("word_occurrences(texte,\"%s\"): %d\n", "pointeur", word_occurrences(texte, "pointeur"));
-
-	//ex3
-	printf("\ncapitalize_word(texte,\"%s\"):\n", "exemple");
-	capitalize_word(texte, "exemple");
-	printf("%s\n", texte);
-
 }
