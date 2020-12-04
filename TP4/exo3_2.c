@@ -16,6 +16,19 @@ void affiche_tab(double* tab, int l){
 int main(){
 
     /*Question 2 de l'exercice 3 à écrire ici*/
-    
+    double* tableau;
+    tableau = (double*)malloc(sizeof(double));
+    double val = 0;
+    int taille = 0;
+    do {
+        printf("Entrez une nouvelle valeur positive (negative pour quitter)\n");
+        scanf("%lf", &val);
+        if (val >= 0) {
+            taille++;
+            tableau = (double*)realloc(tableau, taille * sizeof(double));
+            tableau + taille - 1 = val; // dernière position du tableau
+        }
+    } while (val >= 0);
+    affiche_tab(tableau, taille);
     return EXIT_SUCCESS;
 }

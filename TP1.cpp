@@ -1187,9 +1187,10 @@ int main() {
 }*/
 
 //TD 5
-#include <stdlib.h>
+/*#include <stdlib.h>
 #include <stdio.h>
-/*void swap(int* val1, int* val2) {
+#include <string.h>
+void swap(int* val1, int* val2) {
 	int save;
 	save = *val1;
 	*val1 = *val2;
@@ -1221,7 +1222,7 @@ double meilleur_chrono(athlete* a) {
 
 //Arithmétique des pointeurs
 // EX 5*/
-double* alloc_double(double n) {
+/*double* alloc_double(double n) {
 	int i = 1;
 	int j = n;
 	double* pr;
@@ -1268,7 +1269,7 @@ int main() {
 	int val2 = 13;
 	char tab[] = "string test";
 	char* s = tab;
-	/*swap(&val1, &val2);
+	swap(&val1, &val2);
 	printf("val1 = %d, val2 = %d\n", val1, val2);
 	printf("stringlength = %d\n", string_length(s));
 
@@ -1303,7 +1304,7 @@ int main() {
 	 */
 	//EX 5 main
 	//Fonction et allocation dynamique
-	double* pointeur;
+	/*double* pointeur;
 	double* pointeur2;
 	double* resultexo2;
 	double taille = 13.0;
@@ -1331,4 +1332,404 @@ int main() {
 	for (int i = 0; i < taille * 3; i++) {
 		printf("%f - ", pointeur[i]);
 	}
+}*/
+/*
+char* saisie_liste_num_etudiant() {
+	char* liste_num_etudiant = NULL;
+	int entry = 0;
+	int number = 0;
+	do {
+		printf("Souhaitez vous entrez un nouveau numéro d'etudiant (Non: 0, 1: Oui)?\n");
+		scanf("%d", &entry);
+		if (entry) {
+			// \0 needed at the end -> + 1,
+			// the size we want is also 1 in front of the variable number.
+			liste_num_etudiant = (char*)realloc(liste_num_etudiant, ((number + 1) * 9 + 1) * sizeof(char)); 
+
+			scanf("%s", &liste_num_etudiant[9*number]);
+			number++;
+		}
+	} while (entry);
+	printf("%s", liste_num_etudiant);
+	return liste_num_etudiant;
+}
+
+char* substring(char* main_string, const char* word) {
+	int found = 0;
+	int i = 0;
+	size_t wordSize = strlen(word);
+	while (main_string[i] != '\0' && !found) {
+		if (strncmp(&main_string[i], word, wordSize) == 0) {
+			found = 1;
+		}
+		i++;
+	}
+
+	return found ? &main_string[i - 1] : NULL; // if found -> return the string at the right index, else return NULL
+}
+
+int reverse_bulle(int* tab, int l) {
+	int swapped = 0;
+	int indexMin = 0;
+	int min = tab[indexMin];
+	for (int i = 0; i < l; i++) {
+		if (tab[i] < min) {
+			indexMin = i;
+			min = tab[indexMin];
+			swapped = 1;
+		}
+	}
+	swap(tab+indexMin, tab);
+	return swapped;
+}
+
+void reverse_tri_bulle(int* tab, int l) {
+	for (int i = 0; i < l; i++) {
+		reverse_bulle(tab + i, l - i);
+	}
+	for (int i = 0; i < l; i++) {
+		printf("%d - ", tab[i]);
+	}
+}
+
+int main() {
+	char texte[] = "Ce texte servira d'exemple pour l'exercice sur l'arithmetique des pointeurs et les chaines de caracteres."
+		" Cet exemple permet aussi de rappeler qu'un pointeur sur un caractere d'une chaine permet immediatement de definir"
+		" une sous chaine qui commence par le caractere dont le pointeur est l'adresse.";
+	printf("Part 1\n\n");
+	saisie_liste_num_etudiant();
+	printf("\n\n\nPart 2 \n\n");
+	printf("%s\n\n", substring(texte, "aussi"));
+	int tab[] = { 3,4,1,4,6,100 };
+	reverse_tri_bulle(tab, 6);
+}*/
+
+
+//TD 6
+/*#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+// TP 5
+void affiche_matrice(int** M, int l, int c) {
+	for (int i = 0; i < l; i++) {
+		printf("{");
+		for (int y = 0; y < c; y++) {
+			printf("%6d ", M[i][y]);
+		}
+		printf("}\n");
+	}
+}
+//TP 5
+int** make_matrix(int l, int c) {
+	int** matrice;
+	matrice = (int**)malloc(sizeof(int*) * l);
+	int save = 0;
+	for (int i = 0; i < l; i++) {
+		matrice[i] = (int*)malloc(sizeof(int) * c);
+		for (int y = 0; y < c; y++) {
+			matrice[i][y] = save * 10;
+			save++;
+		}
+	}
+	return matrice;
+}
+
+// for tests
+void affiche_matrice_string(char** M, int l) {
+	int y = 0;
+	printf("liste de mots :\n");
+	for (int i = 0; i < l; i++) {
+		while(M[i][y] != '\0') {
+			printf("%c", M[i][y]);
+			y++;
+		}
+		y = 0;
+		printf("\n");
+	}
+}
+//TP 5
+void effacer_matrice(int** M, int l, int c) {
+	for (int i = 0; i < l; i++) {
+		for (int y = 0; y < c; y++) {
+			M[i][y] = 0;
+		}
+	}
+	for (int i = 0; i < l; i++) {
+		free(M[i]);
+	}
+	free(M);
+}
+
+int** tab_to_matrix(int* tab, int l) {
+	int lsquared = sqrt(l);
+	int** tableau;
+	tableau = (int**)malloc(lsquared * sizeof(int*));
+	int save = 0;
+	for (int i = 0; i < lsquared; i++) {
+		tableau[i] = (int*)malloc(lsquared * sizeof(int*));
+		for (int y = 0; y < lsquared; y++) {
+			tableau[i][y] = tab[save];
+			save++;
+		}
+	}
+	return tableau;
+}
+
+char** create_word_list() {
+	int nbrDeMot = 0;
+	char** listeMots;
+	printf("Combien de mots voulez vous entrer ? \n");
+	scanf("%d", &nbrDeMot);
+	listeMots = (char**)malloc(nbrDeMot * sizeof(char*));
+	printf("Entrez %d mots : \n", nbrDeMot);
+	for (int i = 0; i < nbrDeMot; i++) {
+		listeMots[i] = (char*)malloc(50 * sizeof(char));
+		scanf("%s", listeMots[i]);
+	}
+	return listeMots;
+}
+
+int** make_triangle(int n) {
+	int** triangle;
+	triangle = (int**)malloc(n * sizeof(int*));
+	for (int i = 0; i < n; i++) {
+		triangle[i] = (int*) calloc(i+1,sizeof(int)); 
+	}
+	return triangle;
+}
+//tests
+void affiche_triangle(int** triangle, int taille) {
+	for (int i = 0; i < taille; i++) {
+		for (int y = 0; y < i+1; y++) {
+			printf("%6d", triangle[i][y]);
+		}
+		printf("\n");
+	}
+}
+
+void fill_triangle(int** T, int n) {
+	for (int i = 0; i < n; i++) {			 
+		T[i][0] = 1; // c'est la première colonne, donc = 1;
+											// la première colonne = 1 donc on commence à la deuxième
+		for (int y = 1; y < i; y++) {		// et donc on finit avant la dernière colonne de la ligne
+			T[i][y] = T[i - 1][y - 1] + T[i - 1][y];
+		} 
+		T[i][i] = 1; // dernière colonne de la ligne = 1
+	}
+}
+
+int** make_symm(int** T, int n) {
+	int** M;
+	M = make_matrix(n, n);
+
+	for (int i = 0; i < n; i++) {
+		for (int y = 0; y < n; y++) {	
+			M[i][y] = T[i][y]; // copie de T dans M
+		}
+	}
+	for (int i = 1; i < n; i++) {
+		for (int y = 0; y < i; y++) {
+			M[y][i] = T[i][y];
+		}
+	}
+	return M;
+}
+
+int main() {
+	int tab[9] = { 1,2,3,4,5,6,7,8,9 };
+	int** table;
+	char** tableMots;
+	int tailleTriangle = 6;
+	
+	/*table = tab_to_matrix(tab, 9);
+	affiche_matrice(table, 3, 3);*/
+	/*tableMots = create_word_list();
+	affiche_matrice_string(tableMots, 3);
+	effacer_matrice(table, 3, 3);
+	table = make_triangle(tailleTriangle);
+	fill_triangle(table, tailleTriangle);
+	affiche_triangle(table,tailleTriangle);
+	printf("\n\n");
+	affiche_matrice(make_symm(table, tailleTriangle), tailleTriangle, tailleTriangle);
+	return 1;
+}*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+/*EXERCICE 1*/
+void affiche_quadrant(int c) {
+	int place = 0;
+	for (int i = 0; i < c; i++) {
+		for (int y = 0; y < c; y++) {
+			if ((y < c / 2 && i < c / 2) || (y >= c / 2 && i >= c / 2)) {
+				printf(" . ");
+			}
+			else {
+				printf(" 0 ");
+			}
+		}
+		printf("\n");
+	}
+}
+
+/*EXERCICE 2*/
+char* symetrique(const char* text) {
+	int taille = strlen(text);
+	char* chaine = (char*)malloc(taille *2 * sizeof(char)+1);
+	strcpy(chaine, text);
+	for (int i = taille-1; i >= 0; i--) {
+		chaine[taille + (taille - i)-1] = text[i];
+	}
+	chaine[taille * 2] = '\0';
+	return chaine;
+}
+
+/*EXERCICE 3*/
+int* occurrences_interval(char* text, char min, char max) {
+	int taille = max==min ? 1 : 26;
+	int* occurences = (int*)calloc(taille, sizeof(int));
+	char tempo;
+	for (int i = 0; i < strlen(text); i++) {
+		tempo = tolower(text[i]);
+		if (tempo >= min && tempo <= max && taille != 1) {
+			occurences[tempo - 97]++;
+		}
+		else if(tempo == min) {
+			occurences[0]++;
+		}
+	}
+	return occurences;
+}
+
+/*EXERCICE 4*/
+int** faire_drapeau(int l) {
+	int** drapeaux = (int**)malloc(l * sizeof(int*));
+	int etage = 10;
+	for (int i = 0; i < l; i++) {
+		drapeaux[i] = (int*)malloc(i+1 * sizeof(int));
+		for (int y = 0; y < ((i%4)+1); y++) {
+			drapeaux[i][y] = etage;
+			etage++;
+		}
+	}
+	return drapeaux;
+}
+
+/*Fonction de Test utilisée dans le main pour la question 4, avec l=4, ne pas modifier*/
+void affiche_drapeau4(int** M) {
+	if (M == NULL) { printf("fonction faire_drapeau à faire\n"); return; }
+	printf("%d ", M[0][0]); printf("\n");
+	printf("%d ", M[1][0]); printf("%d ", M[1][1]); printf("\n");
+	printf("%d ", M[2][0]); printf("%d ", M[2][1]); printf("%d ", M[2][2]); printf("\n");
+	printf("%d ", M[3][0]); printf("%d ", M[3][1]); printf("%d ", M[3][2]); printf("%d ", M[3][3]); printf("\n");
+}
+
+
+/*Fonction de Test utilisée dans le main pour la question 4, avec l=8, ne pas modifier*/
+void affiche_drapeau8(int** M)
+{
+	if (M == NULL)
+	{
+		printf("fonction faire_drapeau à faire\n");
+		return;
+	}
+	printf("%d ", M[0][0]);
+	printf("\n");
+	printf("%d ", M[1][0]);
+	printf("%d ", M[1][1]);
+	printf("\n");
+	printf("%d ", M[2][0]);
+	printf("%d ", M[2][1]);
+	printf("%d ", M[2][2]);
+	printf("\n");
+	printf("%d ", M[3][0]);
+	printf("%d ", M[3][1]);
+	printf("%d ", M[3][2]);
+	printf("%d ", M[3][3]);
+	printf("\n");
+	printf("%d ", M[4][0]);
+	printf("\n");
+	printf("%d ", M[5][0]);
+	printf("%d ", M[5][1]);
+	printf("\n");
+	printf("%d ", M[6][0]);
+	printf("%d ", M[6][1]);
+	printf("%d ", M[6][2]);
+	printf("\n");
+	printf("%d ", M[7][0]);
+	printf("%d ", M[7][1]);
+	printf("%d ", M[7][2]);
+	printf("%d ", M[7][3]);
+	printf("\n");
+}
+
+/*Fonction de Test utilisée dans le main pour la question 4, avec l=16, ne pas modifier*/
+void affiche_drapeau16(int** M) {
+	if (M == NULL) { printf("fonction faire_drapeau à faire\n"); return; }
+	printf("%d ", M[0][0]); printf("\n");
+	printf("%d ", M[1][0]); printf("%d ", M[1][1]); printf("\n");
+	printf("%d ", M[2][0]); printf("%d ", M[2][1]); printf("%d ", M[2][2]); printf("\n");
+	printf("%d ", M[3][0]); printf("%d ", M[3][1]); printf("%d ", M[3][2]); printf("%d ", M[3][3]); printf("\n");
+	printf("%d ", M[4][0]); printf("\n");
+	printf("%d ", M[5][0]); printf("%d ", M[5][1]); printf("\n");
+	printf("%d ", M[6][0]); printf("%d ", M[6][1]); printf("%d ", M[6][2]); printf("\n");
+	printf("%d ", M[7][0]); printf("%d ", M[7][1]); printf("%d ", M[7][2]); printf("%d ", M[7][3]); printf("\n");
+	printf("%d ", M[8][0]); printf("\n");
+	printf("%d ", M[9][0]); printf("%d ", M[9][1]); printf("\n");
+	printf("%d ", M[10][0]); printf("%d ", M[10][1]); printf("%d ", M[10][2]); printf("\n");
+	printf("%d ", M[11][0]); printf("%d ", M[11][1]); printf("%d ", M[11][2]); printf("%d ", M[11][3]); printf("\n");
+	printf("%d ", M[12][0]); printf("\n");
+	printf("%d ", M[13][0]); printf("%d ", M[13][1]); printf("\n");
+	printf("%d ", M[14][0]); printf("%d ", M[14][1]); printf("%d ", M[14][2]); printf("\n");
+	printf("%d ", M[15][0]); printf("%d ", M[15][1]); printf("%d ", M[15][2]); printf("%d ", M[15][3]); printf("\n");
+}
+
+/*Ce main permet d'obtenir la trace d'éxecution fournie dans le sujet.
+Il n'y a pas besoin de le modifier pour tester vos programmes.*/
+int main()
+{
+	affiche_quadrant(10);
+	printf("\n");
+
+	printf("Résultat de symetrique(%s) : %s\n", "Alphabet", symetrique("Alphabet"));
+	printf("\n");
+
+	char texte[] = "Ce texte permet de tester si la fonction occurences_interval marche bien.";
+	//une seule lettre dans l'intervalle (e)
+	int* occ_e = occurrences_interval(texte, 'e', 'e');
+	//6 lettres dans l'intervale (a,b,c,d,e,f)
+	int* occ_af = occurrences_interval(texte, 'a', 'f');
+
+	if (!occ_e) {
+		printf("La fonction occurences_interval n'a pas été complétée\n\n");
+	}
+	else {
+		printf("occurrences de la lettre e:%d\n", occ_e[0]);
+		printf("occurrences entre a et f:    a:%d b:%d c:%d d:%d e:%d f:%d \n",
+			occ_af[0], occ_af[1], occ_af[2], occ_af[3], occ_af[4], occ_af[5]);
+		printf("\n");
+	}
+
+	int** drapeau4 = faire_drapeau(4);
+	int** drapeau8 = faire_drapeau(8);
+	int** drapeau16 = faire_drapeau(16);
+	if (!drapeau4) {
+		printf("La fonction faire_drapeau n'a pas été complétée\n");
+	}
+	else {
+		//Attention!! fonctionne uniquement avec drapeau4
+		affiche_drapeau4(drapeau4);
+		printf("\n");
+		//Attention!! fonctionne uniquement avec drapeau4
+		affiche_drapeau8(drapeau8);
+		printf("\n");
+		//Attention!! fonctionne uniquement avec drapeau16
+		affiche_drapeau16(drapeau16);
+	}
+
+	return 0;
 }
